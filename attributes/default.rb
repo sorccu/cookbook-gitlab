@@ -27,6 +27,9 @@ default['gitlab']['app_home'] = "#{node['gitlab']['home']}/gitlab"
 default['gitlab']['gitlab_url'] = "git://github.com/gitlabhq/gitlabhq.git"
 default['gitlab']['gitlab_branch'] = "stable"
 
+# Please override for compatibility with older versions
+default['gitlab']['rake_setup_task'] = "gitlab:setup"
+
 # Database setup
 default['gitlab']['database']['type'] = "mysql"
 default['gitlab']['database']['adapter'] = default['gitlab']['database']['type'] == "mysql" ? "mysql2" : "postgresql"
