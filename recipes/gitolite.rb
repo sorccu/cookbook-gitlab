@@ -21,12 +21,16 @@
   include_recipe cb_include
 end
 
+group node['gitlab']['git_group'] do
+end
+
 # Add git user
 # Password isn't set correctly in original recipe, and really no reason to set one.
 user node['gitlab']['git_user'] do
-  comment "Git User" 
+  comment "Git User"
   home node['gitlab']['git_home']
-  shell "/bin/bash" 
+  group node['gitlab']['git_group']
+  shell "/bin/bash"
   supports :manage_home => true
 end
 
