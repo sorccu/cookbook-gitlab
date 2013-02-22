@@ -77,10 +77,15 @@ python_pip "pygments" do
   action :install
 end
 
+# Add the gitlab group
+group node['gitlab']['group'] do
+end
+
 # Add the gitlab user
 user node['gitlab']['user'] do
   comment "Gitlab User"
   home node['gitlab']['home']
+  group node['gitlab']['group']
   shell "/bin/bash"
   supports :manage_home => true
 end
