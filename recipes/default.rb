@@ -245,20 +245,16 @@ without_group = node['gitlab']['database'] == 'mysql' ? 'postgres' : 'mysql'
 
 # Install Gems with bundle install
 execute "gitlab-bundle-install" do
-  command "bundle install --without development test #{without_group} --deployment"
+  command "sudo -u #{node['gitlab']['user']} -H bundle install --without development test #{without_group} --deployment"
   cwd node['gitlab']['app_home']
-  user node['gitlab']['user']
-  group node['gitlab']['group']
   environment({ 'LANG' => "en_US.UTF-8", 'LC_ALL' => "en_US.UTF-8" })
   not_if { File.exists?("#{node['gitlab']['app_home']}/vendor/bundle") }
 end
 
 # Setup sqlite database for Gitlab
 execute "gitlab-bundle-rake" do
-  command "bundle exec rake gitlab:app:setup RAILS_ENV=production && touch .gitlab-setup"
+  command "sudo -u #{node['gitlab']['user']} -H bundle exec rake gitlab:app:setup RAILS_ENV=production && touch .gitlab-setup"
   cwd node['gitlab']['app_home']
-  user node['gitlab']['user']
-  group node['gitlab']['group']
   not_if { File.exists?("#{node['gitlab']['app_home']}/.gitlab-setup") }
 end
 
