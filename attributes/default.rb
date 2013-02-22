@@ -28,7 +28,7 @@ default['gitlab']['gitlab_url'] = "git://github.com/gitlabhq/gitlabhq.git"
 default['gitlab']['gitlab_branch'] = "stable"
 
 # Please override for compatibility with older versions
-default['gitlab']['rake_setup_task'] = "gitlab:setup"
+default['gitlab']['rake_setup_command'] = "gitlab:setup <<< yes"
 
 # Database setup
 default['gitlab']['database']['type'] = "mysql"
